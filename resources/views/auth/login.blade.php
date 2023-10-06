@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('auth.layout')
   
 @section('content')
 <main class="login-form">
@@ -8,7 +8,22 @@
               <div class="card">
                   <div class="card-header">Login</div>
                   <div class="card-body">
-  
+                    @if ($message = Session::get('failed'))
+                    <div class="alert alert-danger text-center">
+                        <!-- you missed this line of code -->
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong> {{ $message }}
+                    </div>
+                     @endif
+
+                     @if ($message = Session::get('message'))
+                     <div class="alert alert-danger text-center">
+                         <!-- you missed this line of code -->
+                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                         <strong> {{ $message }}
+                     </div>
+                      @endif
+                     
                       <form action="{{ route('login.post') }}" method="POST">
                           @csrf
                           <div class="form-group row">

@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 //auth routes
 Route::get('login', [AuthController::class, 'index'])->name('login');
@@ -26,8 +24,10 @@ Route::get('registration', [AuthController::class, 'registration'])->name('regis
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post'); 
 Route::get('dashboard', [AuthController::class, 'dashboard']); 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-
-
+//email verify route
+Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');
+// Make the 'student' resource controller the default or root URL
+Route::redirect('/', '/student')->middleware(['auth', 'is_verify_email']);
 //students crud routes
+Route::resource('student', StudentController::class)->middleware(['auth', 'is_verify_email']); 
 
-Route::resource('student', StudentController::class);
